@@ -49,6 +49,7 @@ final class StringDashTests: XCTestCase {
     func testKebabCase() throws {
         XCTAssertEqual(StringDash.kebabCase("fooBar"), "foo-bar")
         XCTAssertEqual(StringDash.kebabCase("Foo Bar"), "foo-bar")
+        XCTAssertEqual(StringDash.kebabCase("foo-bar"), "foo-bar")
         XCTAssertEqual(StringDash.kebabCase("__FOO_BAR__"), "foo-bar")
     }
 
@@ -61,5 +62,69 @@ final class StringDashTests: XCTestCase {
     func testLowerFirst() throws {
         XCTAssertEqual(StringDash.lowerFirst("Fred"), "fred")
         XCTAssertEqual(StringDash.lowerFirst("FRED"), "fRED")
+    }
+
+    func testPad() throws {
+        XCTAssertEqual(StringDash.pad("abc", length: 1), "abc")
+        XCTAssertEqual(StringDash.pad("abc", length: 9), "   abc   ")
+
+        XCTAssertEqual(StringDash.pad("abc", length: 7, padding: "_-"), "_-abc_-")
+        XCTAssertEqual(StringDash.pad("abc", length: 8, padding: "_-"), "_-abc_-_")
+        XCTAssertEqual(StringDash.pad("abc", length: 9, padding: "_-"), "_-_-abc_-")
+        XCTAssertEqual(StringDash.pad("abc", length: 10, padding: "_-"), "_-_-abc_-_")
+        XCTAssertEqual(StringDash.pad("abc", length: 11, padding: "_-"), "_-_-abc_-_-")
+    }
+
+    func testPadEnd() throws {
+        XCTAssertEqual(StringDash.padEnd("abc", length: 1), "abc")
+        XCTAssertEqual(StringDash.padEnd("abc", length: 9), "abc      ")
+
+        XCTAssertEqual(StringDash.padEnd("abc", length: 7, padding: "_-"), "abc_-_-")
+        XCTAssertEqual(StringDash.padEnd("abc", length: 8, padding: "_-"), "abc_-_-_")
+    }
+
+    func testPadStart() throws {
+        XCTAssertEqual(StringDash.padStart("abc", length: 1), "abc")
+        XCTAssertEqual(StringDash.padStart("abc", length: 9), "      abc")
+
+        XCTAssertEqual(StringDash.padStart("abc", length: 7, padding: "_-"), "_-_-abc")
+        XCTAssertEqual(StringDash.padStart("abc", length: 8, padding: "_-"), "_-_-_abc")
+    }
+
+    func testSnakeCase() throws {
+        XCTAssertEqual(StringDash.snakeCase("fooBar"), "foo_bar")
+        XCTAssertEqual(StringDash.snakeCase("Foo Bar"), "foo_bar")
+        XCTAssertEqual(StringDash.snakeCase("foo-bar"), "foo_bar")
+        XCTAssertEqual(StringDash.snakeCase("__FOO_BAR__"), "foo_bar")
+    }
+
+    func testSplit() throws {
+        XCTAssertEqual(StringDash.split("a-b-c", separator: "x"), ["a-b-c"])
+        XCTAssertEqual(StringDash.split("a-b-c", separator: "a"), ["-b-c"])
+        XCTAssertEqual(StringDash.split("a-b-c", separator: "a", limit: 1), ["-b-c"])
+        XCTAssertEqual(StringDash.split("a-b-c", separator: "-"), ["a", "b", "c"])
+        XCTAssertEqual(StringDash.split("a-b-c", separator: "-", limit: 2), ["a", "b"])
+    }
+
+    func testStartCase() throws {
+        XCTAssertEqual(StringDash.startCase("fooBar"), "Foobar")
+        XCTAssertEqual(StringDash.startCase("--foo-bar--"), "Foo Bar")
+        XCTAssertEqual(StringDash.startCase("__FOO_BAR__"), "FOO BAR")
+    }
+
+    func testTrim() throws {
+        XCTAssertEqual(StringDash.trim("fooBar   "), "fooBar")
+        XCTAssertEqual(StringDash.trim("   fooBar   "), "fooBar")
+    }
+
+    func testUppercase() throws {
+        XCTAssertEqual(StringDash.upperCase("foo-bar"), "FOO BAR")
+        XCTAssertEqual(StringDash.upperCase("--Foo-Bar--"), "FOO BAR")
+        XCTAssertEqual(StringDash.upperCase("__FOO_BAR__"), "FOO BAR")
+    }
+
+    func testUpperFirst() throws {
+        XCTAssertEqual(StringDash.upperFirst("fred"), "Fred")
+        XCTAssertEqual(StringDash.upperFirst("FRED"), "FRED")
     }
 }
