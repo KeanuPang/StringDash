@@ -1,7 +1,7 @@
 import Foundation
 
 public struct StringDash {
-    static func camelCase(_ string: String ...) -> String {
+    public static func camelCase(_ string: String ...) -> String {
         return string.reduce(into: "") { result, s in
             s.trimmingCharacters(in: CharacterSet.whitespaces)
                 .components(separatedBy: CharacterSet.alphanumerics.inverted).joined(separator: " ")
@@ -13,20 +13,20 @@ public struct StringDash {
         }
     }
 
-    static func capitalize(_ string: String ...) -> String {
+    public static func capitalize(_ string: String ...) -> String {
         return string.reduce(into: "") { result, s in
             result.append(s.capitalized)
         }
     }
 
-    static func endsWith(_ string: String, suffix: String, position: Int? = nil) -> Bool {
+    public static func endsWith(_ string: String, suffix: String, position: Int? = nil) -> Bool {
         guard let pos = position else { return string.hasSuffix(suffix) }
         guard pos < string.count else { return false }
 
         return string[string.startIndex ..< string.index(string.startIndex, offsetBy: pos + 1)].hasSuffix(suffix)
     }
 
-    static func escape(_ string: String) -> String {
+    public static func escape(_ string: String) -> String {
         guard string.isEmpty == false else { return string }
 
         var encodedStr = string
@@ -36,7 +36,7 @@ public struct StringDash {
         return encodedStr
     }
 
-    static func unescape(_ string: String) -> String {
+    public static func unescape(_ string: String) -> String {
         guard string.isEmpty == false else { return string }
 
         var decodedStr = string
@@ -46,11 +46,11 @@ public struct StringDash {
         return decodedStr
     }
 
-    static func escapeRegEx(_ string: String) -> String {
+    public static func escapeRegEx(_ string: String) -> String {
         return NSRegularExpression.escapedPattern(for: string)
     }
 
-    static func kebabCase(_ string: String) -> String {
+    public static func kebabCase(_ string: String) -> String {
         let conjunction = "-"
         if string.contains("-") {
             return capitalizeSubSequences(string, conjunction: conjunction, separator: "-")
@@ -63,38 +63,38 @@ public struct StringDash {
         }
     }
 
-    static func lowerCase(_ string: String) -> String {
+    public static func lowerCase(_ string: String) -> String {
         return string.trimmingCharacters(in: CharacterSet.whitespaces)
             .components(separatedBy: CharacterSet.alphanumerics.inverted).joined(separator: " ")
             .trimmingCharacters(in: CharacterSet.whitespaces)
             .lowercased()
     }
 
-    static func lowerFirst(_ string: String) -> String {
+    public static func lowerFirst(_ string: String) -> String {
         return "\(string.prefix(1).lowercased())\(string.dropFirst())"
     }
 
-    static func pad(_ string: String, length: Int = 0, padding: String = " ") -> String {
+    public static func pad(_ string: String, length: Int = 0, padding: String = " ") -> String {
         guard length > string.count else { return string }
 
         let firstPadCount = Int(((Double(length - string.count) / 2.0).rounded(.down) / Double(padding.count)).rounded(.up))
         return (String(repeating: padding, count: firstPadCount) + string).padding(toLength: length, withPad: padding, startingAt: 0)
     }
 
-    static func padEnd(_ string: String, length: Int = 0, padding: String = " ") -> String {
+    public static func padEnd(_ string: String, length: Int = 0, padding: String = " ") -> String {
         guard length > string.count else { return string }
 
         return string.padding(toLength: length, withPad: padding, startingAt: 0)
     }
 
-    static func padStart(_ string: String, length: Int = 0, padding: String = " ") -> String {
+    public static func padStart(_ string: String, length: Int = 0, padding: String = " ") -> String {
         guard length > string.count else { return string }
 
         let temp = String(String(string.reversed()).padding(toLength: length, withPad: padding, startingAt: 0).reversed())
         return "\(String(temp.replacingOccurrences(of: string, with: "").reversed()))\(string)"
     }
 
-    static func snakeCase(_ string: String) -> String {
+    public static func snakeCase(_ string: String) -> String {
         let conjunction = "_"
         if string.contains("_") {
             return capitalizeSubSequences(string, conjunction: conjunction, separator: "_")
@@ -107,7 +107,7 @@ public struct StringDash {
         }
     }
 
-    static func split(_ string: String, separator: String, limit: Int? = nil) -> [String] {
+    public static func split(_ string: String, separator: String, limit: Int? = nil) -> [String] {
         let array = string.components(separatedBy: separator).filter { $0.isEmpty == false }
 
         guard let limit = limit else { return array }
@@ -115,7 +115,7 @@ public struct StringDash {
         return array.prefix(limit).map { String($0) }
     }
 
-    static func startCase(_ string: String) -> String {
+    public static func startCase(_ string: String) -> String {
         return string.trimmingCharacters(in: CharacterSet.whitespaces)
             .components(separatedBy: CharacterSet.alphanumerics.inverted)
             .map {
@@ -126,18 +126,18 @@ public struct StringDash {
             .trimmingCharacters(in: CharacterSet.whitespaces)
     }
 
-    static func trim(_ string: String) -> String {
+    public static func trim(_ string: String) -> String {
         string.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
     }
 
-    static func upperCase(_ string: String) -> String {
+    public static func upperCase(_ string: String) -> String {
         return string.trimmingCharacters(in: CharacterSet.whitespaces)
             .components(separatedBy: CharacterSet.alphanumerics.inverted).joined(separator: " ")
             .trimmingCharacters(in: CharacterSet.whitespaces)
             .uppercased()
     }
 
-    static func upperFirst(_ string: String) -> String {
+    public static func upperFirst(_ string: String) -> String {
         guard string.uppercased() == string else { return string.capitalized }
         return string
     }
